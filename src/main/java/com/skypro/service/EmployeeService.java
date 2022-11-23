@@ -1,0 +1,107 @@
+package com.skypro.service;
+
+import com.skypro.record.EmployeeRequest;
+import com.skypro.model.Employee;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@Service  // Аннотация Сервис говорит спрингу что этот компонент должен быть создан в единственном экземпляре
+public class EmployeeService {
+    private final Map<Integer, Employee> employees = new HashMap<>();
+    private final List<Employee> listEmployees = new ArrayList<>(employees.values());
+
+    public Employee addEmployee(EmployeeRequest employeeRequest) {
+        if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
+            throw new IllegalArgumentException("Employee name should be set");
+        }
+        Employee employee = new Employee(employeeRequest.getFirstName(),
+                employeeRequest.getLastName(),
+                employeeRequest.getDepartment(),
+                employeeRequest.getSalary());
+        this.employees.put(employee.getId(), employee);
+        return employee;
+    }
+
+    public Collection<Employee> getAllEmployees() {
+        return this.employees.values();
+    }
+
+    public int getSalarySum() {
+        return employees.values().stream()
+                .mapToInt(Employee::getSalary)
+                .sum();
+    }
+//    public int getSalarySum() {
+//        int sum = 0;
+//        for (Employee employee : employees.values()) {
+//            int salary = employee.getSalary();
+//            sum += salary;
+//        }
+//        return sum;
+//    }
+
+//    public Employee getSalaryMin() {
+//        return employees.values().stream().sorted().findFirst().get();
+//    }
+
+
+    public Employee getSalaryMin() {
+        List<Employee> listEmployees = new ArrayList<>(employees.values());
+        Employee staffWithMin = null;
+        int minSalary = 1000000000;
+        int i;
+        for (i = 0; i < listEmployees.size(); i++) {
+            if (listEmployees.get(i) != null) {
+                if (listEmployees.get(i).getSalary() != 0) {
+                    if (listEmployees.get(i).getSalary() < minSalary) {
+                        minSalary = listEmployees.get(i).getSalary();
+                        staffWithMin = listEmployees.get(i);
+                    }
+                }
+            }
+        }
+        return staffWithMin;
+    }
+
+    public Employee getSalaryMax() {
+        List<Employee> listEmployees = new ArrayList<>(employees.values());
+        Employee staffWithMax = null;
+        int maxSalary = -1;
+        for (int i = 0; i < listEmployees.size(); i++) {
+            if (listEmployees.get(i) != null) {
+                    if (listEmployees.get(i).getSalary() > maxSalary) {
+                        maxSalary = listEmployees.get(i).getSalary();
+                        staffWithMax = listEmployees.get(i);
+                    }
+            }
+        }
+        return staffWithMax;
+    }
+
+    public List<Employee> getSalaryHigh() {
+        List<Employee> listEmployees = new ArrayList<>(employees.values());
+        List<Employee> employeesWithSalaryMoreAvarage = new ArrayList<>();
+
+        double avarageSalary = 0;
+        int summary = 0;
+
+        for (int i = 0; i < listEmployees.size(); i++) {
+            if (listEmployees.get(i) != null) {
+                summary += listEmployees.get(i).getSalary();
+            }
+        }
+        avarageSalary = summary / (double) listEmployees.size();
+
+        Employee staffWithAvarage = null;
+
+         for (int i = 0; i < listEmployees.size(); i++) {
+            if (listEmployees.get(i) != null) {
+                if (listEmployees.get(i).getSalary() > avarageSalary) {
+                    employeesWithSalaryMoreAvarage.add(listEmployees.get(i));
+                }
+            }
+        }
+        return employeesWithSalaryMoreAvarage;
+    }
+}

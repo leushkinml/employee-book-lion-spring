@@ -1,4 +1,4 @@
-package com.skypro.employee.employeebooklionspring;
+package com.skypro.employeebooklionspring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
