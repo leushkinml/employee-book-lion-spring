@@ -94,8 +94,8 @@ public class EmployeeService {
 
     public List<Employee> getSalaryHigh() {
         List<Employee> listEmployees = new ArrayList<>(employees.values());
-        List<Employee> employeesWithSalaryMoreAvarage = new ArrayList<>();
-        double avarageSalary = 0;
+        List<Employee> employeesWithSalaryMoreAverage = new ArrayList<>();
+        double averageSalary = 0;
         int summary = 0;
 
         for (int i = 0; i < listEmployees.size(); i++) {
@@ -103,37 +103,33 @@ public class EmployeeService {
                 summary += listEmployees.get(i).getSalary();
             }
         }
-        avarageSalary = summary / (double) listEmployees.size();
-
-        Employee staffWithAvarage = null;
+        averageSalary = summary / (double) listEmployees.size();
 
          for (int i = 0; i < listEmployees.size(); i++) {
             if (listEmployees.get(i) != null) {
-                if (listEmployees.get(i).getSalary() > avarageSalary) {
-                    employeesWithSalaryMoreAvarage.add(listEmployees.get(i));
+                if (listEmployees.get(i).getSalary() > averageSalary) {
+                    employeesWithSalaryMoreAverage.add(listEmployees.get(i));
                 }
             }
         }
-        return employeesWithSalaryMoreAvarage;
+        return employeesWithSalaryMoreAverage;
     }
 
 //    public List<Employee> getSalaryHigh() {
 //        List<Employee> listEmployees = new ArrayList<>(employees.values());
-//        List<Employee> employeesWithSalaryMoreAvarage = new ArrayList<>();
+//        List<Employee> employeesWithSalaryMoreAverage = new ArrayList<>();
 //
-//        OptionalDouble avarageSalary = employees.values().stream()
+//        OptionalDouble averageSalary = employees.values().stream()
 //                .mapToInt(Employee::getSalary)
 //                .average();
 //
-//        Employee staffWithAvarage = null;
-//
 //        for (int i = 0; i < listEmployees.size(); i++) {
 //            if (listEmployees.get(i) != null) {
-//                if (listEmployees.get(i).getSalary() > avarageSalary) {
-//                    employeesWithSalaryMoreAvarage.add(listEmployees.get(i));
+//                if (listEmployees.get(i).getSalary() > averageSalary) {
+//                    employeesWithSalaryMoreAverage.add(listEmployees.get(i));
 //                }
 //            }
 //        }
-//        return employeesWithSalaryMoreAvarage;
+//        return employeesWithSalaryMoreAverage;
 //    }
 }
