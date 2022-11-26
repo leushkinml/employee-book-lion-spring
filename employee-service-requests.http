@@ -8,6 +8,9 @@ GET http://localhost:8080/employees
 ### Получить сумму зарплат по сотрудникам
 GET http://localhost:8080/employees/salary/sum
 
+### Получить среднюю зарплату по сотрудникам
+GET http://localhost:8080/employees/salary/average
+
 ### Напечатать Привет,мир!
 GET http://localhost:8080/helloWorld
 

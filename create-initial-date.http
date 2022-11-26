@@ -3,8 +3,8 @@ POST http://localhost:8080/employees
 Content-Type: application/json
 
 {
-  "firstName": "Test",
-  "lastName": "Test",
+  "firstName": "Ivan",
+  "lastName": "Ivanov",
   "department": 1,
   "salary": 1000
 }
@@ -13,8 +13,8 @@ POST http://localhost:8080/employees
 Content-Type: application/json
 
 {
-  "firstName": "Test2",
-  "lastName": "Test2",
+  "firstName": "peter",
+  "lastName": "Petrov",
   "department": 2,
   "salary": 2000
 }
@@ -23,8 +23,8 @@ POST http://localhost:8080/employees
 Content-Type: application/json
 
 {
-  "firstName": "Test3",
-  "lastName": "Test3",
+  "firstName": "Sidor",
+  "lastName": "sidorov",
   "department": 3,
   "salary": 3000
 }
@@ -33,8 +33,30 @@ POST http://localhost:8080/employees
 Content-Type: application/json
 
 {
-  "firstName": "Test4",
-  "lastName": "Test4",
+  "firstName": "nikolay",
+  "lastName": "nikolaev",
   "department": 4,
   "salary": 4000
+}
+
+### Создать сотрудника 5
+POST http://localhost:8080/employees
+Content-Type: application/json
+
+{
+  "firstName": "Sem5",
+  "lastName": "Demo",
+  "department": 5,
+  "salary": 5000
+}
+
+### Создать сотрудника 6
+POST http://localhost:8080/employees
+Content-Type: application/json
+
+{
+  "firstName": "Demo",
+  "lastName": "Brik.",
+  "department": 6,
+  "salary": 6000
 }

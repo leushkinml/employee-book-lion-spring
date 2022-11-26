@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalDouble;
 
 /**
  * HTTP Методы (основные, которые мы используем):
@@ -52,13 +54,18 @@ public class EmployeeController {
         return this.employeeService.getSalarySum();
     }
 
+    @GetMapping("/employees/salary/average")
+    public OptionalDouble getSalaryAverage() {
+        return this.employeeService.getSalaryAverage();
+    }
+
     @GetMapping("/employees/salary/min")
-    public Employee getSalaryMin() {
+    public Optional<Employee> getSalaryMin() {
         return this.employeeService.getSalaryMin();
     }
 
     @GetMapping("/employees/salary/max")
-    public Employee getSalaryMax() {
+    public Optional<Employee> getSalaryMax() {
         return this.employeeService.getSalaryMax();
     }
 
