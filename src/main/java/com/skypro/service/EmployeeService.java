@@ -2,6 +2,7 @@ package com.skypro.service;
 
 import com.skypro.record.EmployeeRequest;
 import com.skypro.model.Employee;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,17 +24,26 @@ public class EmployeeService {
         this.employees.put(employee.getId(), employee);
         return employee;
     }
-
+//    private void checkEmployee (EmployeeRequest employeeRequest) throws Exception {
+//        if (
+//                StringUtils.isBlank(employeeRequest.getFirstName())
+//                        || StringUtils.isBlank(employeeRequest.getLastName())
+//                        || StringUtils.isAlpha(employeeRequest.getFirstName())
+//                        || StringUtils.isAlpha(employeeRequest.getLastName())) {
+//            throw new IllegalArgumentException("Допустимы только буквы.");
+//        }
+//    }
     public Collection<Employee> getAllEmployees() {
         return this.employees.values();
     }
-
+//    public List<Employee> getAllEmployees() {
+//        return employees.values().stream().toList();
+//    }
     public int getSalarySum() {
         return employees.values().stream()
                 .mapToInt(Employee::getSalary)
                 .sum();
     }
-
     public OptionalDouble getSalaryAverage() {
         return employees.values().stream()
                 .mapToDouble(Employee::getSalary)
@@ -47,9 +57,9 @@ public class EmployeeService {
 //        }
 //        return sum;
 //    }
-
     public Optional<Employee> getSalaryMin() {
-        return employees.values().stream().min(Comparator.comparingInt(e -> e.getSalary()));
+        return employees.values().stream().min(Comparator.comparingInt(Employee::getSalary));
+        //return employees.values().stream().min(Comparator.comparingInt(e -> e.getSalary()));
     }
 // для стримов есть встроенные методы min и max
 // которые принимают компаратор - специальный объект который сравнивает два значения Employee -
@@ -73,9 +83,9 @@ public class EmployeeService {
 //        }
 //        return staffWithMin;
 //    }
-
     public Optional<Employee> getSalaryMax() {
-        return employees.values().stream().max(Comparator.comparingInt(e -> e.getSalary()));
+        return employees.values().stream().max(Comparator.comparingInt(Employee::getSalary));
+        //return employees.values().stream().max(Comparator.comparingInt(e -> e.getSalary()));
     }
 //    public Employee getSalaryMax() {
 //        List<Employee> listEmployees = new ArrayList<>(employees.values());
@@ -90,40 +100,29 @@ public class EmployeeService {
 //            }
 //        }
 //        return staffWithMax;
-//    }
-
     public List<Employee> getSalaryHigh() {
-        List<Employee> listEmployees = new ArrayList<>(employees.values());
-        List<Employee> employeesWithSalaryMoreAverage = new ArrayList<>();
-        double averageSalary = 0;
-        int summary = 0;
-
-        for (int i = 0; i < listEmployees.size(); i++) {
-            if (listEmployees.get(i) != null) {
-                summary += listEmployees.get(i).getSalary();
-            }
-        }
-        averageSalary = summary / (double) listEmployees.size();
-
-         for (int i = 0; i < listEmployees.size(); i++) {
-            if (listEmployees.get(i) != null) {
-                if (listEmployees.get(i).getSalary() > averageSalary) {
-                    employeesWithSalaryMoreAverage.add(listEmployees.get(i));
-                }
-            }
-        }
-        return employeesWithSalaryMoreAverage;
+    double averageSalary = employees.values().stream()
+            .mapToInt(Employee::getSalary)
+            .average()
+            .getAsDouble();
+    return employees.values().stream()
+            .filter(e -> e.getSalary()>averageSalary)
+            .toList();
     }
-
 //    public List<Employee> getSalaryHigh() {
 //        List<Employee> listEmployees = new ArrayList<>(employees.values());
 //        List<Employee> employeesWithSalaryMoreAverage = new ArrayList<>();
-//
-//        OptionalDouble averageSalary = employees.values().stream()
-//                .mapToInt(Employee::getSalary)
-//                .average();
+//        double averageSalary = 0;
+//        int summary = 0;
 //
 //        for (int i = 0; i < listEmployees.size(); i++) {
+//            if (listEmployees.get(i) != null) {
+//                summary += listEmployees.get(i).getSalary();
+//            }
+//        }
+//        averageSalary = summary / (double) listEmployees.size();
+//
+//         for (int i = 0; i < listEmployees.size(); i++) {
 //            if (listEmployees.get(i) != null) {
 //                if (listEmployees.get(i).getSalary() > averageSalary) {
 //                    employeesWithSalaryMoreAverage.add(listEmployees.get(i));
