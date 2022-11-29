@@ -57,10 +57,14 @@ public class EmployeeService {
 //        }
 //        return sum;
 //    }
-    public Optional<Employee> getSalaryMin() {
-        return employees.values().stream().min(Comparator.comparingInt(Employee::getSalary));
-        //return employees.values().stream().min(Comparator.comparingInt(e -> e.getSalary()));
+
+    public Employee getSalaryMin() {
+        return employees.values().stream().min(Comparator.comparingInt(Employee::getSalary)).orElse(null);
     }
+//    public Optional<Employee> getSalaryMin() {
+//        return employees.values().stream().min(Comparator.comparingInt(Employee::getSalary));
+//        //return employees.values().stream().min(Comparator.comparingInt(e -> e.getSalary()));
+//    }
 // для стримов есть встроенные методы min и max
 // которые принимают компаратор - специальный объект который сравнивает два значения Employee -
 // создать его можно через Comparator.comparingInt(e -> e.getSalary()) -
@@ -83,10 +87,13 @@ public class EmployeeService {
 //        }
 //        return staffWithMin;
 //    }
-    public Optional<Employee> getSalaryMax() {
-        return employees.values().stream().max(Comparator.comparingInt(Employee::getSalary));
-        //return employees.values().stream().max(Comparator.comparingInt(e -> e.getSalary()));
-    }
+public Employee getSalaryMax() {
+    return employees.values().stream().max(Comparator.comparingInt(Employee::getSalary)).orElse(null);
+}
+//    public Optional<Employee> getSalaryMax() {
+//        return employees.values().stream().max(Comparator.comparingInt(Employee::getSalary));
+//        //return employees.values().stream().max(Comparator.comparingInt(e -> e.getSalary()));
+//    }
 //    public Employee getSalaryMax() {
 //        List<Employee> listEmployees = new ArrayList<>(employees.values());
 //        Employee staffWithMax = null;
