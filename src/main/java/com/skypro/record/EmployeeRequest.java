@@ -1,5 +1,6 @@
 package com.skypro.record;
 
+import com.skypro.exception.EmployeeException;
 import org.apache.commons.lang3.StringUtils;
 
 public class EmployeeRequest {
@@ -36,9 +37,10 @@ public class EmployeeRequest {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName) throws EmployeeException {
         if (!StringUtils.isAlpha(lastName)) {
-            throw new IllegalArgumentException("The name must contain only letters");
+            //throw new IllegalArgumentException("The name must contain only letters");
+            throw new EmployeeException("The name must contain only letters");
         }
         this.lastName = StringUtils.capitalize(lastName.toLowerCase());
     }

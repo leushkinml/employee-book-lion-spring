@@ -1,5 +1,6 @@
 package com.skypro.service;
 
+import com.skypro.exception.EmployeeException;
 import com.skypro.record.EmployeeRequest;
 import com.skypro.model.Employee;
 import org.apache.commons.lang3.StringUtils;
@@ -57,7 +58,6 @@ public class EmployeeService {
 //        }
 //        return sum;
 //    }
-
     public Employee getSalaryMin() {
         return employees.values().stream().min(Comparator.comparingInt(Employee::getSalary)).orElse(null);
     }
@@ -69,7 +69,6 @@ public class EmployeeService {
 // которые принимают компаратор - специальный объект который сравнивает два значения Employee -
 // создать его можно через Comparator.comparingInt(e -> e.getSalary()) -
 // то есть тогда сотрудники будут сравниваться по зарплате
-
 //    public Employee getSalaryMin() {
 //        List<Employee> listEmployees = new ArrayList<>(employees.values());
 //        Employee staffWithMin = null;
