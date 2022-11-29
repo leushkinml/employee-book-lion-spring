@@ -2,6 +2,8 @@ package com.skypro.record;
 
 import com.skypro.exception.EmployeeException;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 public class EmployeeRequest {
     private String firstName;
@@ -18,7 +20,8 @@ public class EmployeeRequest {
 
     public void setFirstName(String firstName) throws EmployeeException {
         if (!StringUtils.isAlpha(firstName)) {
-            throw new EmployeeException("The name must contain only letters");
+            //throw new EmployeeException("The name must contain only letters");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         this.firstName = StringUtils.capitalize(firstName.toLowerCase());
     }
