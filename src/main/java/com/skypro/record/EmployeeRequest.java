@@ -16,9 +16,9 @@ public class EmployeeRequest {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName) throws EmployeeException {
         if (!StringUtils.isAlpha(firstName)) {
-            throw new IllegalArgumentException("The name must contain only letters");
+            throw new EmployeeException("The name must contain only letters");
         }
         this.firstName = StringUtils.capitalize(firstName.toLowerCase());
     }

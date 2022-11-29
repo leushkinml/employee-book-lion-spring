@@ -1,6 +1,7 @@
 package com.skypro.controller;
 
 
+import com.skypro.exception.EmployeeException;
 import com.skypro.model.Employee;
 import com.skypro.record.EmployeeRequest;
 import com.skypro.service.EmployeeService;
@@ -35,7 +36,7 @@ public class EmployeeController {
     // и назначим нашему полю значение из аргумента
 
     @PostMapping("/employees")
-    public Employee createEmployee(@RequestBody EmployeeRequest employeeRequest) {
+    public Employee createEmployee(@RequestBody EmployeeRequest employeeRequest) throws EmployeeException {
         return this.employeeService.addEmployee(employeeRequest);
     }
 

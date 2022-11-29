@@ -13,9 +13,9 @@ public class EmployeeService {
     private final Map<Integer, Employee> employees = new HashMap<>();
     private final List<Employee> listEmployees = new ArrayList<>(employees.values());
 
-    public Employee addEmployee(EmployeeRequest employeeRequest) {
+    public Employee addEmployee(EmployeeRequest employeeRequest) throws EmployeeException {
         if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
-            throw new IllegalArgumentException("Employee name should be set");
+            throw new EmployeeException("The name must contain only letters");
         }
 
         Employee employee = new Employee(employeeRequest.getFirstName(),
