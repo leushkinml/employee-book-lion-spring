@@ -58,8 +58,11 @@ public class EmployeeService {
 //        }
 //        return sum;
 //    }
-    public Employee getSalaryMin() {
-        return employees.values().stream().min(Comparator.comparingInt(Employee::getSalary)).orElse(null);
+    public Employee getSalaryMin() throws EmployeeException {
+        return employees.values().stream()
+                .min(Comparator.comparingInt(Employee::getSalary))
+                .orElseThrow(()->new EmployeeException("The must be at list one date"));
+        //return employees.values().stream().min(Comparator.comparingInt(Employee::getSalary)).orElse(null);
     }
 //    public Optional<Employee> getSalaryMin() {
 //        return employees.values().stream().min(Comparator.comparingInt(Employee::getSalary));
@@ -86,9 +89,12 @@ public class EmployeeService {
 //        }
 //        return staffWithMin;
 //    }
-public Employee getSalaryMax() {
-    return employees.values().stream().max(Comparator.comparingInt(Employee::getSalary)).orElse(null);
-}
+    public Employee getSalaryMax() throws EmployeeException {
+        return employees.values().stream()
+                .max(Comparator.comparingInt(Employee::getSalary))
+                .orElseThrow(()->new EmployeeException("The must be at list one date"));
+        //return employees.values().stream().max(Comparator.comparingInt(Employee::getSalary)).orElse(null);
+    }
 //    public Optional<Employee> getSalaryMax() {
 //        return employees.values().stream().max(Comparator.comparingInt(Employee::getSalary));
 //        //return employees.values().stream().max(Comparator.comparingInt(e -> e.getSalary()));

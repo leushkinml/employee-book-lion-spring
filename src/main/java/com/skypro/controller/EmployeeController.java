@@ -76,7 +76,7 @@ public class EmployeeController {
 //        return this.employeeService.getSalaryAverage();
 //    }
     @GetMapping("/employees/salary/min")
-    public ResponseEntity<Employee> getSalaryMin() {
+    public ResponseEntity<Employee> getSalaryMin() throws EmployeeException {
         return new ResponseEntity<>(this.employeeService.getSalaryMin(), HttpStatus.OK);
     }
 //    @GetMapping("/employees/salary/min")
@@ -84,7 +84,7 @@ public class EmployeeController {
 //        return this.employeeService.getSalaryMin();
 //    }
     @GetMapping("/employees/salary/max")
-    public ResponseEntity<Employee> getSalaryMax() {
+    public ResponseEntity<Employee> getSalaryMax() throws EmployeeException {
         return new ResponseEntity<>(this.employeeService.getSalaryMax(), HttpStatus.OK);
     }
 //    @GetMapping("/employees/salary/max")
