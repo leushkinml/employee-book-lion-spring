@@ -35,6 +35,7 @@ public class EmployeeService {
 //        }
 //    }
     public Collection<Employee> getAllEmployees() {
+
         return this.employees.values();
     }
 //    public List<Employee> getAllEmployees() {
@@ -90,7 +91,8 @@ public class EmployeeService {
 //        return staffWithMin;
 //    }
     public Employee getSalaryMax() throws EmployeeException {
-        return employees.values().stream()
+        return employees.values()
+                .stream()
                 .max(Comparator.comparingInt(Employee::getSalary))
                 .orElseThrow(()->new EmployeeException("The must be at list one date"));
         //return employees.values().stream().max(Comparator.comparingInt(Employee::getSalary)).orElse(null);
@@ -121,6 +123,8 @@ public class EmployeeService {
             .filter(e -> e.getSalary()>averageSalary)
             .toList();
     }
+
+
 //    public List<Employee> getSalaryHigh() {
 //        List<Employee> listEmployees = new ArrayList<>(employees.values());
 //        List<Employee> employeesWithSalaryMoreAverage = new ArrayList<>();
@@ -143,4 +147,8 @@ public class EmployeeService {
 //        }
 //        return employeesWithSalaryMoreAverage;
 //    }
+
+    public Employee removeEmployee(int id) {
+        return employees.remove(id);
+    }
 }

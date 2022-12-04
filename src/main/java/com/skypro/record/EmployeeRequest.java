@@ -25,7 +25,7 @@ public class EmployeeRequest {
         }
         this.firstName = StringUtils.capitalize(firstName.toLowerCase());
     }
-//    public void setFirstName(String firstName) {
+//    public void setFirstName(String firtName) {
 //        if (!StringUtils.containsOnly(firstName, 'A','B','S','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y',
 //                'Z','a','b', 'c','d','e','f','g','h','i','g','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')) {
 //            throw new IllegalArgumentException("The name must contain only letters");
