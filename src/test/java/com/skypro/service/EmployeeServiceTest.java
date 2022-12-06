@@ -31,7 +31,7 @@ class EmployeeServiceTest {
         this.employees.put(2, employeeTest3);
         this.employees.put(3, employeeTest4);
         this.employees.put(4, employeeTest5);
-        final Collection<Employee> employeeExpected = new ArrayList<>(employees.values());
+        final Collection<Employee> employeeEx = new ArrayList<>(employees.values());
     }
 //    @BeforeEach
 //    public void setUp() {
@@ -75,41 +75,45 @@ class EmployeeServiceTest {
 
     @Test // getAllEmployees
     public void shouldReturnAllEmployees() {
-        Collection<Employee> employeeExpected = new ArrayList<>(employees.values());
+        Collection<Employee> employeeExpected = employeeOut.employees.values();
+
         assertEquals(employeeExpected, actualEmployees);
     }
 
     @Test // getSalarySum
     public void shouldReturnSalarySum() {
-        int sumExpected = employees.values().stream()
+        int sumActual = employees.values().stream()
                 .mapToInt(Employee::getSalary)
                 .sum();
-        assertEquals(sumExpected, 15000);
+        int sumExpected = employeeOut.getSalarySum();
+
+        assertEquals(sumExpected, sumActual);
     }
 
     @Test // getSalaryAverage
     public void shouldReturnSalaryAverage() {
-        OptionalDouble averageExpected = employees.values().stream()
+        OptionalDouble averageActual = employees.values().stream()
                 .mapToDouble(Employee::getSalary)
                 .average();
-        assertEquals(averageExpected, OptionalDouble.of(3000));
+        OptionalDouble averageExpected = employeeOut.getSalaryAverage();
+        assertEquals(averageExpected, averageActual);
     }
 
     @Test // getSalaryMin
     public void shouldReturnEmployeeWithSalaryMin() throws EmployeeException{
-    Employee employeeExpected = employees.values().stream()
+        Employee employeeActual = employees.values().stream()
             .min(Comparator.comparingInt(Employee::getSalary))
             .orElseThrow(()->new EmployeeException("The must be at list one date"));
-        Employee employeeActual = employees.get(0);
+        Employee employeeExpected = employeeOut.getSalaryMin();
         assertEquals(employeeExpected, employeeActual);
     }
 
     @Test // getSalaryMax
     public void shouldReturnEmployeeWithSalaryMax() throws EmployeeException {
-        Employee employeeExpected = employees.values().stream()
+        Employee employeeActual = employees.values().stream()
                 .max(Comparator.comparingInt(Employee::getSalary))
                 .orElseThrow(()->new EmployeeException("The must be at list one date"));
-        Employee employeeActual = employees.get(4);
+        Employee employeeExpected = employeeOut.getSalaryMax();
         assertEquals(employeeExpected, employeeActual);
     }
 
@@ -119,21 +123,19 @@ class EmployeeServiceTest {
                 .mapToInt(Employee::getSalary)
                 .average()
                 .getAsDouble();
-        List<Employee> employeeExpected = employees.values().stream()
+        List<Employee> employeeActual = employees.values().stream()
                 .filter(e -> e.getSalary()>averageSalaryExpected)
                 .toList();
-        List<Employee> employeeActual = actualEmployees.stream()
-                .filter(e -> e.getSalary()>3000)
-                .toList();
+        List<Employee> employeeExpected = employeeOut.getSalaryHigh();
         assertEquals(employeeExpected, employeeActual);
     }
 
-    @Test
-    public void removeEmployee() {
+    @Test // removeEmployee
+    public void shouldReturnEmployeeListWithoutRemovedEmployee() {
 //        employeeOut.removeEmployee(employeeOut.getAllEmployees().iterator().next().getId());
 //        Collection<Employee> employees = employeeOut.getAllEmployees();
 //        Assertions.assertTrue((BooleanSupplier) hasSize(4));
-        employees.remove(2);
+        employeeOut.removeEmployee(2);
         Collection<Employee> employeeExpected = new ArrayList<>(employees.values());
         actualEmployees.remove(2);
         Collection<Employee> employeeActual = new ArrayList<>(actualEmployees);

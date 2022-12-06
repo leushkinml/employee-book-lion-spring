@@ -10,7 +10,7 @@ import java.util.*;
 
 @Service  // Аннотация Сервис говорит спрингу что этот компонент должен быть создан в единственном экземпляре
 public class EmployeeService {
-    private final Map<Integer, Employee> employees = new HashMap<>();
+    final Map<Integer, Employee> employees = new HashMap<>();
     private final List<Employee> listEmployees = new ArrayList<>(employees.values());
 
     public Employee addEmployee(EmployeeRequest employeeRequest) throws EmployeeException {
