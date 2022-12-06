@@ -1,119 +1,142 @@
 package com.skypro.service;
-
 import com.skypro.exception.EmployeeException;
 import com.skypro.model.Employee;
-import com.skypro.record.EmployeeRequest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.OptionalDouble;
-import java.util.stream.Stream;
-
+import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 class EmployeeServiceTest {
 
-    private EmployeeService out;
+    private EmployeeService employeeOut;
 
+    private List<Employee> actualEmployees;
 
-    @BeforeEach
-    public void setUp() {
-        this.out = new EmployeeService();
-        Stream.of(
-                new EmployeeRequest("FirstName", "FirstSurname", 1, 1000),
-                new EmployeeRequest("SecondName", "SecondSurname", 2, 2000),
-                new EmployeeRequest("ThirdName", "ThirdSurname", 3, 3000),
-                new EmployeeRequest("ForthName", "ForthSurname", 4, 4000),
-                new EmployeeRequest("FivesName", "FivesSurname", 5, 5000)
-        ).forEach(out::addEmployee);
-    }
+    private final Map<Integer, Employee> employees = new HashMap<>();
 
     @BeforeEach
     public void setUp() {
-        this.out = new EmployeeService();
-        Stream.of(
-                new Employee("FirstName", "FirstSurname", 1, 1000),
-                new Employee("SecondName", "SecondSurname", 2, 2000),
-                new Employee("ThirdName", "ThirdSurname", 3, 3000),
-                new Employee("ForthName", "ForthSurname", 4, 4000),
-                new Employee("FivesName", "FivesSurname", 5, 5000)
-        ).forEach(out::addEmployee);
+        this.employeeOut = new EmployeeService();
+        EmployeeService employeeService = employeeOut;
+        Employee employeeTest1 = new Employee("FirstName", "FirstSurname", 1, 1000);
+        Employee employeeTest2 = new Employee("SecondName", "SecondSurname", 2, 2000);
+        Employee employeeTest3 = new Employee("ThirdName", "ThirdSurname", 3, 3000);
+        Employee employeeTest4 = new Employee("ForthName", "ForthSurname", 4, 4000);
+        Employee employeeTest5 = new Employee("FivesName", "FivesSurname", 5, 5000);
+
+        actualEmployees = new ArrayList<>(List.of(employeeTest1, employeeTest2, employeeTest3, employeeTest4, employeeTest5));
+
+        this.employees.put(0, employeeTest1);
+        this.employees.put(1, employeeTest2);
+        this.employees.put(2, employeeTest3);
+        this.employees.put(3, employeeTest4);
+        this.employees.put(4, employeeTest5);
+        final Collection<Employee> employeeExpected = new ArrayList<>(employees.values());
     }
+//    @BeforeEach
+//    public void setUp() {
+//        this.employeeOut = new EmployeeService();
+//        EmployeeService employeeService = employeeOut;
+//
+//        for (EmployeeRequest request : Arrays.asList(
+//                new EmployeeRequest("FirstName", "FirstSurname", 1, 1000),
+//                new EmployeeRequest("SecondName", "SecondSurname", 2, 2000),
+//                new EmployeeRequest("ThirdName", "ThirdSurname", 3, 3000),
+//                new EmployeeRequest("ForthName", "ForthSurname", 4, 4000),
+//                new EmployeeRequest("FivesName", "FivesSurname", 5, 5000)
+//        )) {
+//            employeeService.addEmployee(request);
+//        }
+//    }
 
+//    @Test
+//    public void addEmployee() throws EmployeeException {
+//        EmployeeRequest request = new EmployeeRequest("Valid", "Valid", 3, 3000);
+//        Employee result = employeeOut.addEmployee(request);
+//        assertEquals(request.getFirstName(), result.getFirstName());
+//        assertEquals(request.getLastName(), result.getLastName());
+//        assertEquals(request.getDepartment(), result.getDepartment());
+//        assertEquals(request.getSalary(), result.getSalary());
+//
+//        assertEquals(result, actualEmployees);
+//        Assertions
+//                .assertThat(employeeOut.getAllEmployees())
+//                .contains(result);
+//    }
 
-    @Test
-    public void addEmployee() throws EmployeeException {
-        EmployeeRequest request = new EmployeeRequest("Valid", "Valid", 3, 3000);
-        Employee result = out.addEmployee(request);
-        assertEquals(request.getFirstName(), result.getFirstName());
-        assertEquals(request.getLastName(), result.getLastName());
-        assertEquals(request.getDepartment(), result.getDepartment());
-        assertEquals(request.getSalary(), result.getSalary());
-        Assertions
-                .assertThat(out.getAllEmployees())
-                .contains(result);
-
-    }
+//    @Test // getAllEmployees
+//    public void shouldReturnAllEmployees() {
+//        Collection<Employee> employees = employeeOut.getAllEmployees();
+//        Assertions.assertThat(employees).hasSize(5)
+//                .first()
+//                .extractig(Employee::getFirstName)
+//                .isEqualTo(15000);
+//    }
 
     @Test // getAllEmployees
     public void shouldReturnAllEmployees() {
-        Collection<Employee> employees = out.getAllEmployees();
-        Assertions.assertThat(employees).hasSize(5);
-        Assertions.assertThat(employees).hasSize(5)
-                .first()
-                .extractig(Employee::getFirstName)
-                .isEqualTo(15000);
+        Collection<Employee> employeeExpected = new ArrayList<>(employees.values());
+        assertEquals(employeeExpected, actualEmployees);
     }
 
     @Test // getSalarySum
     public void shouldReturnSalarySum() {
-        int sum = out.getSalarySum();
-        Assertions
-                .assertThat(sum)
-                .isEqualTo(15000);
+        int sumExpected = employees.values().stream()
+                .mapToInt(Employee::getSalary)
+                .sum();
+        assertEquals(sumExpected, 15000);
     }
 
     @Test // getSalaryAverage
     public void shouldReturnSalaryAverage() {
-        OptionalDouble average = out.getSalaryAverage();
-        Assertions
-                .assertThat(average)
-                .isEqualTo(3000);
+        OptionalDouble averageExpected = employees.values().stream()
+                .mapToDouble(Employee::getSalary)
+                .average();
+        assertEquals(averageExpected, OptionalDouble.of(3000));
     }
-
 
     @Test // getSalaryMin
     public void shouldReturnEmployeeWithSalaryMin() throws EmployeeException{
-    Employee employee = out.getSalaryMin();
-        Assertions.assertThat(employee)
-                .isNotNull()
-                .extracting(Employee::getFirstName)
-                .isEqualTo("FirstName");
+    Employee employeeExpected = employees.values().stream()
+            .min(Comparator.comparingInt(Employee::getSalary))
+            .orElseThrow(()->new EmployeeException("The must be at list one date"));
+        Employee employeeActual = employees.get(0);
+        assertEquals(employeeExpected, employeeActual);
     }
 
     @Test // getSalaryMax
     public void shouldReturnEmployeeWithSalaryMax() throws EmployeeException {
-    Employee employee = out.getSalaryMax();
-        Assertions.assertThat(employee)
-                .isNotNull()
-                .extracting(Employee::getFirstName)
-                .isEqualTo("FivesName");
+        Employee employeeExpected = employees.values().stream()
+                .max(Comparator.comparingInt(Employee::getSalary))
+                .orElseThrow(()->new EmployeeException("The must be at list one date"));
+        Employee employeeActual = employees.get(4);
+        assertEquals(employeeExpected, employeeActual);
     }
 
-    @Test
-    public void getSalaryHigh() {
+    @Test // getSalaryHigh
+    public void shouldReturnEmployeeWithSalaryMoreThenAverage() {
+        double averageSalaryExpected = employees.values().stream()
+                .mapToInt(Employee::getSalary)
+                .average()
+                .getAsDouble();
+        List<Employee> employeeExpected = employees.values().stream()
+                .filter(e -> e.getSalary()>averageSalaryExpected)
+                .toList();
+        List<Employee> employeeActual = actualEmployees.stream()
+                .filter(e -> e.getSalary()>3000)
+                .toList();
+        assertEquals(employeeExpected, employeeActual);
     }
 
     @Test
     public void removeEmployee() {
-        out.removeEmployee(out.getAllEmployees().iterator().next().getId());
-        Collection<Employee> employees = out.getAllEmployees();
-        Assertions.assertThat(employees).hasSize(4);
+//        employeeOut.removeEmployee(employeeOut.getAllEmployees().iterator().next().getId());
+//        Collection<Employee> employees = employeeOut.getAllEmployees();
+//        Assertions.assertTrue((BooleanSupplier) hasSize(4));
+        employees.remove(2);
+        Collection<Employee> employeeExpected = new ArrayList<>(employees.values());
+        actualEmployees.remove(2);
+        Collection<Employee> employeeActual = new ArrayList<>(actualEmployees);
+        assertEquals(employeeExpected, employeeActual);
     }
 }

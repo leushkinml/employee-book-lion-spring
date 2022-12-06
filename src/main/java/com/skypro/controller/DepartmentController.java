@@ -26,15 +26,15 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("/department/{id}/employees") // Эта аннотация, которая вернёт наших сотрудников по запоросу /employees
-    public ResponseEntity<Collection<Employee>> getAllEmployeesInDepartment(@PathParam(value = "id") int department) {// Создали метод для получения наших сотрудников.
+    @GetMapping("/department/{id}/employees")
+    public ResponseEntity<Collection<Employee>> getAllEmployeesInDepartment(@PathParam(value = "id") int department) {
         return new ResponseEntity<>(this.departmentService.getEmployeesInDepartment((department)), HttpStatus.OK);
     }
 
-//    @GetMapping("/department/employees")
-//    public ResponseEntity<Map<Integer, List<Employee>> getEmployeesMapByDepartment() {
-//        return new ResponseEntity<>(this.departmentService.getEmployeesMapByDepartment(), HttpStatus.OK);
-//    }
+    @GetMapping("/department/employees")
+    public ResponseEntity<Map<Integer, List<Employee>>> getEmployeesMapByDepartment() {
+        return new ResponseEntity<>(this.departmentService.getEmployeesMapByDepartment(), HttpStatus.OK);
+    }
 
     @GetMapping("/department/{id}/salary/sum")
     public ResponseEntity<Integer> getSalarySumByDepartment(@PathParam(value = "id") int department) {

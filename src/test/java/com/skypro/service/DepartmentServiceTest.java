@@ -23,10 +23,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class DepartmentServiceTest {
 
     @Mock
-    private EmployeeService employeeService;
+    private EmployeeService employeeServiceOut;
 
     @InjectMocks
-    private DepartmentService departmentService;
+    private DepartmentService departmentOut;
 
     private List<Employee> actualEmployees;
 
@@ -35,17 +35,13 @@ class DepartmentServiceTest {
         Employee employeeTest1 = new Employee("FirstName", "FirstSurname", 1, 1000);
         Employee employeeTest2 = new Employee("SecondName", "SecondSurname", 2, 2000);
         Employee employeeTest3 = new Employee("ThirdName", "ThirdSurname", 3, 3000);
-
         actualEmployees = new ArrayList<>(List.of(employeeTest1, employeeTest2, employeeTest3));
-
-        Mockito.when(employeeService.getAllEmployees()).thenReturn(actualEmployees);
+        Mockito.when(employeeServiceOut.getAllEmployees()).thenReturn(actualEmployees);
     }
-
 
     @Test
         // getEmployeesMapByDepartment
     public void shouldReturnEmployeesMapByDepartment() {
-
         final Map<Integer, List<Employee>> actual =
                 actualEmployees.stream()
                         .map(Employee::getDepartment).collect(Collectors.toSet())
@@ -54,8 +50,7 @@ class DepartmentServiceTest {
                                 .filter(e -> e.getDepartment() == dept)
                                 .collect(Collectors.toList())));
 
-        final Map<Integer, List<Employee>> expected = departmentService.getEmployeesMapByDepartment();
-
+        final Map<Integer, List<Employee>> expected = departmentOut.getEmployeesMapByDepartment();
         assertEquals(expected, actual);
     }
 
@@ -63,13 +58,11 @@ class DepartmentServiceTest {
         // getEmployeesInDepartment
     public void shouldReturnEmployeesInDepartment() {
         final int department = 1;
-
         final List<Employee> actual = actualEmployees
                 .stream()
                 .filter(e -> e.getDepartment() == department)
                 .collect(Collectors.toList());
-        final Collection<Employee> expected = departmentService.getEmployeesInDepartment(department);
-
+        final Collection<Employee> expected = departmentOut.getEmployeesInDepartment(department);
         assertEquals(expected, actual);
     }
 
@@ -77,14 +70,12 @@ class DepartmentServiceTest {
         // getSalarySumByDepartment
     public void shouldReturnSalarySumByDepartment() {
         final int department = 1;
-
         final int actual = actualEmployees
                 .stream()
                 .filter(e -> e.getDepartment() == department)
                 .mapToInt(Employee::getSalary)
                 .sum();
-        final int expected = departmentService.getSalarySumByDepartment(department);
-
+        final int expected = departmentOut.getSalarySumByDepartment(department);
         assertEquals(expected, actual);
     }
 
@@ -92,14 +83,12 @@ class DepartmentServiceTest {
         // getSalaryMinByDepartment
     public void shouldReturnSalaryMinByDepartment() throws EmployeeNotFoundedException {
         final int department = 1;
-
         final int actual = actualEmployees
                 .stream()
                 .filter(e -> e.getDepartment() == department)
                 .mapToInt(Employee::getSalary)
                 .min().orElse(0);
-        final int expected = departmentService.getSalaryMinByDepartment(department);
-
+        final int expected = departmentOut.getSalaryMinByDepartment(department);
         assertEquals(expected, actual);
     }
 
@@ -107,14 +96,12 @@ class DepartmentServiceTest {
         // getSalaryMaxByDepartment
     public void shouldReturnSalaryMaxByDepartment() throws EmployeeNotFoundedException{
         final int department = 1;
-
         final int actual = actualEmployees
                 .stream()
                 .filter(e -> e.getDepartment() == department)
                 .mapToInt(Employee::getSalary)
                 .max().orElse(0);
-        final int expected = departmentService.getSalaryMaxByDepartment(department);
-
+        final int expected = departmentOut.getSalaryMaxByDepartment(department);
         assertEquals(expected, actual);
     }
 }

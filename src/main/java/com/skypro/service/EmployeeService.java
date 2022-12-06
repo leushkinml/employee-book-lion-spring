@@ -46,12 +46,7 @@ public class EmployeeService {
                 .mapToInt(Employee::getSalary)
                 .sum();
     }
-    public OptionalDouble getSalaryAverage() {
-        return employees.values().stream()
-                .mapToDouble(Employee::getSalary)
-                .average();
-    }
-//    public int getSalarySum() {
+    //    public int getSalarySum() {
 //        int sum = 0;
 //        for (Employee employee : employees.values()) {
 //            int salary = employee.getSalary();
@@ -59,6 +54,12 @@ public class EmployeeService {
 //        }
 //        return sum;
 //    }
+    public OptionalDouble getSalaryAverage()    {
+        return employees.values().stream()
+                .mapToDouble(Employee::getSalary)
+                .average();
+    }
+
     public Employee getSalaryMin() throws EmployeeException {
         return employees.values().stream()
                 .min(Comparator.comparingInt(Employee::getSalary))
@@ -123,8 +124,6 @@ public class EmployeeService {
             .filter(e -> e.getSalary()>averageSalary)
             .toList();
     }
-
-
 //    public List<Employee> getSalaryHigh() {
 //        List<Employee> listEmployees = new ArrayList<>(employees.values());
 //        List<Employee> employeesWithSalaryMoreAverage = new ArrayList<>();

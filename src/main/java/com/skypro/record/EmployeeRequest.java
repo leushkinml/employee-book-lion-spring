@@ -11,7 +11,14 @@ public class EmployeeRequest {
     private int department;
     private int salary;
 
-//    Character[] chars = {'A','B','S','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y',
+    public EmployeeRequest(String firstName, String lastName, int department, int salary) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.department = department;
+        this.salary = salary;
+    }
+
+    //    Character[] chars = {'A','B','S','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y',
 //            'Z','a','b', 'c','d','e','f','g','h','i','g','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 //    private static final String VALID_CHARACTERS="ABSDEFGHIJKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz";
     public String getFirstName() {

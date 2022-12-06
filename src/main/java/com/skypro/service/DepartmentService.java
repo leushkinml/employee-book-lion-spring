@@ -18,8 +18,6 @@ public class DepartmentService {
 
     private Stream<Employee> getEmployeesByDepartmentStream(int department) {
         return employeeService.getAllEmployees().stream().filter(e -> e.getDepartment() == department);
-
-
     }
 
         public Map<Integer, List<Employee>> getEmployeesMapByDepartment() {
