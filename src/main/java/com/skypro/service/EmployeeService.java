@@ -10,21 +10,28 @@ import java.util.*;
 
 @Service  // Аннотация Сервис говорит спрингу что этот компонент должен быть создан в единственном экземпляре
 public class EmployeeService {
-    final Map<Integer, Employee> employees = new HashMap<>();
-    private final List<Employee> listEmployees = new ArrayList<>(employees.values());
 
-    public Employee addEmployee(EmployeeRequest employeeRequest) throws EmployeeException {
-        if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
-            throw new EmployeeException("The name must contain only letters");
-        }
+    private final EmployeeRequest employeeRequest;
 
-        Employee employee = new Employee(employeeRequest.getFirstName(),
-                employeeRequest.getLastName(),
-                employeeRequest.getDepartment(),
-                employeeRequest.getSalary());
-        this.employees.put(employee.getId(), employee);
-        return employee;
+    public EmployeeService(EmployeeRequest employeeRequest) {
+        this.employeeRequest = employeeRequest;
     }
+
+//    final Map<Integer, Employee> employees = new HashMap<>();
+//    private final List<Employee> listEmployees = new ArrayList<>(employees.values());
+//
+//    public Employee addEmployee(EmployeeRequest employeeRequest) throws EmployeeException {
+//        if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
+//            throw new EmployeeException("The name must contain only letters");
+//        }
+//
+//        Employee employee = new Employee(employeeRequest.getFirstName(),
+//                employeeRequest.getLastName(),
+//                employeeRequest.getDepartment(),
+//                employeeRequest.getSalary());
+//        this.employees.put(employee.getId(), employee);
+//        return employee;
+//    }
 //    private void checkEmployee (EmployeeRequest employeeRequest) throws Exception {
 //        if (
 //                StringUtils.isBlank(employeeRequest.getFirstName())
@@ -35,14 +42,13 @@ public class EmployeeService {
 //        }
 //    }
     public Collection<Employee> getAllEmployees() {
-
-        return this.employees.values();
+        return employeeRequest.getListEmployees();
     }
 //    public List<Employee> getAllEmployees() {
 //        return employees.values().stream().toList();
 //    }
     public int getSalarySum() {
-        return employees.values().stream()
+        return employeeRequest.getListEmployees().stream()
                 .mapToInt(Employee::getSalary)
                 .sum();
     }
@@ -55,13 +61,12 @@ public class EmployeeService {
 //        return sum;
 //    }
     public OptionalDouble getSalaryAverage()    {
-        return employees.values().stream()
+        return employeeRequest.getListEmployees().stream()
                 .mapToDouble(Employee::getSalary)
                 .average();
     }
-
     public Employee getSalaryMin() throws EmployeeException {
-        return employees.values().stream()
+        return employeeRequest.getListEmployees().stream()
                 .min(Comparator.comparingInt(Employee::getSalary))
                 .orElseThrow(()->new EmployeeException("The must be at list one date"));
         //return employees.values().stream().min(Comparator.comparingInt(Employee::getSalary)).orElse(null);
@@ -92,7 +97,7 @@ public class EmployeeService {
 //        return staffWithMin;
 //    }
     public Employee getSalaryMax() throws EmployeeException {
-        return employees.values()
+        return employeeRequest.getListEmployees()
                 .stream()
                 .max(Comparator.comparingInt(Employee::getSalary))
                 .orElseThrow(()->new EmployeeException("The must be at list one date"));
@@ -116,11 +121,11 @@ public class EmployeeService {
 //        }
 //        return staffWithMax;
     public List<Employee> getSalaryHigh() {
-    double averageSalary = employees.values().stream()
+    double averageSalary = employeeRequest.getListEmployees().stream()
             .mapToInt(Employee::getSalary)
             .average()
             .getAsDouble();
-    return employees.values().stream()
+    return employeeRequest.getListEmployees().stream()
             .filter(e -> e.getSalary()>averageSalary)
             .toList();
     }
@@ -146,8 +151,7 @@ public class EmployeeService {
 //        }
 //        return employeesWithSalaryMoreAverage;
 //    }
-
     public Employee removeEmployee(int id) {
-        return employees.remove(id);
+        return employeeRequest.employees.remove(id);
     }
 }

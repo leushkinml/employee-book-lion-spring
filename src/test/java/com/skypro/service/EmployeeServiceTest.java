@@ -1,23 +1,34 @@
 package com.skypro.service;
 import com.skypro.exception.EmployeeException;
 import com.skypro.model.Employee;
+import com.skypro.record.EmployeeRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
 
+    @Mock
+    private EmployeeRequest employeeRequestOut;
+    @InjectMocks
     private EmployeeService employeeOut;
 
     private List<Employee> actualEmployees;
-
-    private final Map<Integer, Employee> employees = new HashMap<>();
+    private final Map<Integer, Employee> employeesTest = new HashMap<>();
 
     @BeforeEach
     public void setUp() {
-        this.employeeOut = new EmployeeService();
-        EmployeeService employeeService = employeeOut;
+        //this.employeeOut = new EmployeeService();
+        //EmployeeService employeeOut = new EmployeeService();
+        //EmployeeService employeeService = employeeOut;
         Employee employeeTest1 = new Employee("FirstName", "FirstSurname", 1, 1000);
         Employee employeeTest2 = new Employee("SecondName", "SecondSurname", 2, 2000);
         Employee employeeTest3 = new Employee("ThirdName", "ThirdSurname", 3, 3000);
@@ -26,12 +37,15 @@ class EmployeeServiceTest {
 
         actualEmployees = new ArrayList<>(List.of(employeeTest1, employeeTest2, employeeTest3, employeeTest4, employeeTest5));
 
-        this.employees.put(0, employeeTest1);
-        this.employees.put(1, employeeTest2);
-        this.employees.put(2, employeeTest3);
-        this.employees.put(3, employeeTest4);
-        this.employees.put(4, employeeTest5);
-        final Collection<Employee> employeeEx = new ArrayList<>(employees.values());
+        this.employeesTest.put(0, employeeTest1);
+        this.employeesTest.put(1, employeeTest2);
+        this.employeesTest.put(2, employeeTest3);
+        this.employeesTest.put(3, employeeTest4);
+        this.employeesTest.put(4, employeeTest5);
+
+        Mockito.when(employeeRequestOut.getListEmployees()).thenReturn(actualEmployees);
+        //Mockito.when(employeeRequestOut.employees).thenReturn(employeesTest);
+        //final Collection<Employee> employeeEx = new ArrayList<>(employees.values());
     }
 //    @BeforeEach
 //    public void setUp() {
@@ -72,19 +86,18 @@ class EmployeeServiceTest {
 //                .extractig(Employee::getFirstName)
 //                .isEqualTo(15000);
 //    }
-
     @Test // getAllEmployees
     public void shouldReturnAllEmployees() {
-        Collection<Employee> employeeExpected = employeeOut.employees.values();
-
+        Collection<Employee> employeeExpected =  employeeRequestOut.getListEmployees();
         assertEquals(employeeExpected, actualEmployees);
     }
 
     @Test // getSalarySum
     public void shouldReturnSalarySum() {
-        int sumActual = employees.values().stream()
+        int sumActual = employeesTest.values().stream()
                 .mapToInt(Employee::getSalary)
                 .sum();
+
         int sumExpected = employeeOut.getSalarySum();
 
         assertEquals(sumExpected, sumActual);
@@ -92,7 +105,7 @@ class EmployeeServiceTest {
 
     @Test // getSalaryAverage
     public void shouldReturnSalaryAverage() {
-        OptionalDouble averageActual = employees.values().stream()
+        OptionalDouble averageActual = employeesTest.values().stream()
                 .mapToDouble(Employee::getSalary)
                 .average();
         OptionalDouble averageExpected = employeeOut.getSalaryAverage();
@@ -101,7 +114,7 @@ class EmployeeServiceTest {
 
     @Test // getSalaryMin
     public void shouldReturnEmployeeWithSalaryMin() throws EmployeeException{
-        Employee employeeActual = employees.values().stream()
+        Employee employeeActual = employeesTest.values().stream()
             .min(Comparator.comparingInt(Employee::getSalary))
             .orElseThrow(()->new EmployeeException("The must be at list one date"));
         Employee employeeExpected = employeeOut.getSalaryMin();
@@ -110,7 +123,7 @@ class EmployeeServiceTest {
 
     @Test // getSalaryMax
     public void shouldReturnEmployeeWithSalaryMax() throws EmployeeException {
-        Employee employeeActual = employees.values().stream()
+        Employee employeeActual = employeesTest.values().stream()
                 .max(Comparator.comparingInt(Employee::getSalary))
                 .orElseThrow(()->new EmployeeException("The must be at list one date"));
         Employee employeeExpected = employeeOut.getSalaryMax();
@@ -119,11 +132,11 @@ class EmployeeServiceTest {
 
     @Test // getSalaryHigh
     public void shouldReturnEmployeeWithSalaryMoreThenAverage() {
-        double averageSalaryExpected = employees.values().stream()
+        double averageSalaryExpected = employeesTest.values().stream()
                 .mapToInt(Employee::getSalary)
                 .average()
                 .getAsDouble();
-        List<Employee> employeeActual = employees.values().stream()
+        List<Employee> employeeActual = employeesTest.values().stream()
                 .filter(e -> e.getSalary()>averageSalaryExpected)
                 .toList();
         List<Employee> employeeExpected = employeeOut.getSalaryHigh();
@@ -136,7 +149,7 @@ class EmployeeServiceTest {
 //        Collection<Employee> employees = employeeOut.getAllEmployees();
 //        Assertions.assertTrue((BooleanSupplier) hasSize(4));
         employeeOut.removeEmployee(2);
-        Collection<Employee> employeeExpected = new ArrayList<>(employees.values());
+        Collection<Employee> employeeExpected = new ArrayList<>(employeesTest.values());
         actualEmployees.remove(2);
         Collection<Employee> employeeActual = new ArrayList<>(actualEmployees);
         assertEquals(employeeExpected, employeeActual);

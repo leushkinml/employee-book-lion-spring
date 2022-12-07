@@ -1,21 +1,50 @@
 package com.skypro.record;
 
 import com.skypro.exception.EmployeeException;
+import com.skypro.model.Employee;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Service
 public class EmployeeRequest {
     private String firstName;
     private String lastName;
     private int department;
     private int salary;
 
-    public EmployeeRequest(String firstName, String lastName, int department, int salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.department = department;
-        this.salary = salary;
+//    public EmployeeRequest(String firstName, String lastName, int department, int salary) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.department = department;
+//        this.salary = salary;
+//    }
+
+    public static final Map<Integer, Employee> employees = new HashMap<>();
+    private final List<Employee> listEmployees = new ArrayList<>(employees.values());
+
+    public Employee addEmployee(EmployeeRequest employeeRequest) throws EmployeeException {
+        if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
+            throw new EmployeeException("The name must contain only letters");
+        }
+
+        Employee employee = new Employee(employeeRequest.getFirstName(),
+                employeeRequest.getLastName(),
+                employeeRequest.getDepartment(),
+                employeeRequest.getSalary());
+        employees.put(employee.getId(), employee);
+        return employee;
+    }
+
+    public List<Employee> getListEmployees() {
+        return listEmployees;
     }
 
     //    Character[] chars = {'A','B','S','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y',

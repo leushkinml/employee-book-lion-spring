@@ -24,7 +24,6 @@ class DepartmentServiceTest {
 
     @Mock
     private EmployeeService employeeServiceOut;
-
     @InjectMocks
     private DepartmentService departmentOut;
 
