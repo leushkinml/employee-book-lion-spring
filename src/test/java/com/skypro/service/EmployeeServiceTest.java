@@ -88,7 +88,7 @@ class EmployeeServiceTest {
 //    }
     @Test // getAllEmployees
     public void shouldReturnAllEmployees() {
-        Collection<Employee> employeeExpected =  employeeRequestOut.getListEmployees();
+        Collection<Employee> employeeExpected =  employeeOut.getAllEmployees();
         assertEquals(employeeExpected, actualEmployees);
     }
 
