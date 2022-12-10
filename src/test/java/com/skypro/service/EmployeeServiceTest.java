@@ -64,22 +64,22 @@ class EmployeeServiceTest {
         employeeOut.addEmployee(employeeRequest4);
         employeeOut.addEmployee(employeeRequest5);
 
-        // actualEmployees = new ArrayList<>(employeeOut.employees.values());
+        actualEmployees = new ArrayList<>(employeeOut.employees.values());
 
         //actualEmployees = new ArrayList<>(List.of(employeeRequest1, employeeRequest2, employeeRequest3, employeeRequest4, employeeRequest5));
     }
 
-    @BeforeEach
-    public void setUpActualEmployees() throws EmployeeException {
-
-        Employee employeeTest1 = new Employee("FirstName", "FirstSurname", 1, 1000);
-        Employee employeeTest2 = new Employee("SecondName", "SecondSurname", 2, 2000);
-        Employee employeeTest3 = new Employee("ThirdName", "ThirdSurname", 3, 3000);
-        Employee employeeTest4 = new Employee("ForthName", "ForthSurname", 4, 4000);
-        Employee employeeTest5 = new Employee("FivesName", "FivesSurname", 5, 5000);
-
-        actualEmployees = new ArrayList<>(List.of(employeeTest1, employeeTest2, employeeTest3, employeeTest4, employeeTest5));
-    }
+//    @BeforeEach
+//    public void setUpActualEmployees() throws EmployeeException {
+//
+//        Employee employeeTest1 = new Employee("FirstName", "FirstSurname", 1, 1000);
+//        Employee employeeTest2 = new Employee("SecondName", "SecondSurname", 2, 2000);
+//        Employee employeeTest3 = new Employee("ThirdName", "ThirdSurname", 3, 3000);
+//        Employee employeeTest4 = new Employee("ForthName", "ForthSurname", 4, 4000);
+//        Employee employeeTest5 = new Employee("FivesName", "FivesSurname", 5, 5000);
+//
+//        actualEmployees = new ArrayList<>(List.of(employeeTest1, employeeTest2, employeeTest3, employeeTest4, employeeTest5));
+//    }
 
 //    @BeforeEach
 //    public void setUp() throws EmployeeException {
@@ -121,7 +121,8 @@ class EmployeeServiceTest {
 //    }
     @Test // getAllEmployees
     public void shouldReturnAllEmployees() {
-        Collection<Employee> employeeExpected =  employeeOut.getAllEmployees();
+        Collection<Employee> employeeTem = employeeOut.getAllEmployees();
+        List<Employee> employeeExpected = new ArrayList<>(employeeTem);
         assertEquals(employeeExpected, actualEmployees);
     }
 
