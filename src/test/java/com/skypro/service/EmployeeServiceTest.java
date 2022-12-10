@@ -64,7 +64,9 @@ class EmployeeServiceTest {
         employeeOut.addEmployee(employeeRequest4);
         employeeOut.addEmployee(employeeRequest5);
 
-//        actualEmployees = new ArrayList<>(List.of(employeeRequest1, employeeRequest2, employeeRequest3, employeeRequest4, employeeRequest5));
+        // actualEmployees = new ArrayList<>(employeeOut.employees.values());
+
+        //actualEmployees = new ArrayList<>(List.of(employeeRequest1, employeeRequest2, employeeRequest3, employeeRequest4, employeeRequest5));
     }
 
     @BeforeEach
@@ -93,8 +95,6 @@ class EmployeeServiceTest {
 //            employeeOut.addEmployee(request);
 //        }
 //    }
-
-
 
 //    @Test
 //    public void addEmployee() throws EmployeeException {

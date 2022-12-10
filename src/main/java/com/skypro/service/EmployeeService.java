@@ -36,8 +36,7 @@ public class EmployeeService {
         }
     }
     public Collection<Employee> getAllEmployees() {
-        return this.employees
-                .values();
+        return this.employees.values();
     }
 //    public List<Employee> getAllEmployees() {
 //        return employees.values().stream().toList();
