@@ -13,38 +13,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
 public class EmployeeRequest {
     private String firstName;
     private String lastName;
     private int department;
     private int salary;
 
-//    public EmployeeRequest(String firstName, String lastName, int department, int salary) {
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.department = department;
-//        this.salary = salary;
-//    }
-
-    public static final Map<Integer, Employee> employees = new HashMap<>();
-    private final List<Employee> listEmployees = new ArrayList<>(employees.values());
-
-    public Employee addEmployee(EmployeeRequest employeeRequest) throws EmployeeException {
-        if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
-            throw new EmployeeException("The name must contain only letters");
-        }
-
-        Employee employee = new Employee(employeeRequest.getFirstName(),
-                employeeRequest.getLastName(),
-                employeeRequest.getDepartment(),
-                employeeRequest.getSalary());
-        employees.put(employee.getId(), employee);
-        return employee;
-    }
-
-    public List<Employee> getListEmployees() {
-        return listEmployees;
+    public EmployeeRequest(String firstName, String lastName, int department, int salary) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.department = department;
+        this.salary = salary;
     }
 
     //    Character[] chars = {'A','B','S','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y',
@@ -54,13 +33,16 @@ public class EmployeeRequest {
         return firstName;
     }
 
-    public void setFirstName(String firstName) throws EmployeeException {
-        if (!StringUtils.isAlpha(firstName)) {
-            //throw new EmployeeException("The name must contain only letters");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
+    public void setFirstName(String firstName) {
         this.firstName = StringUtils.capitalize(firstName.toLowerCase());
     }
+//    public void setFirstName(String firstName) throws EmployeeException {
+//        if (!StringUtils.isAlpha(firstName)) {
+//            //throw new EmployeeException("The name must contain only letters");
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+//        }
+//        this.firstName = StringUtils.capitalize(firstName.toLowerCase());
+//    }
 //    public void setFirstName(String firtName) {
 //        if (!StringUtils.containsOnly(firstName, 'A','B','S','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y',
 //                'Z','a','b', 'c','d','e','f','g','h','i','g','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')) {
@@ -76,13 +58,17 @@ public class EmployeeRequest {
         return lastName;
     }
 
-    public void setLastName(String lastName) throws EmployeeException {
-        if (!StringUtils.isAlpha(lastName)) {
-            //throw new IllegalArgumentException("The name must contain only letters");
-            throw new EmployeeException("The name must contain only letters");
-        }
+    public void setLastName(String lastName) {
         this.lastName = StringUtils.capitalize(lastName.toLowerCase());
     }
+//    public void setLastName(String lastName) throws EmployeeException {
+//        if (!StringUtils.isAlpha(lastName)) {
+//            //throw new IllegalArgumentException("The name must contain only letters");
+//            throw new EmployeeException("The name must contain only letters");
+//        }
+//        this.lastName = StringUtils.capitalize(lastName.toLowerCase());
+//    }
+
 //    public void setLastName(String lastName) {
 //        for (int i = 0; i < lastName.length(); i++) {
 //            if (!VALID_CHARACTERS.contains(String.valueOf(lastName.charAt(i)))) {

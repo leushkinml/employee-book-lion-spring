@@ -37,7 +37,6 @@ class DepartmentServiceTest {
         actualEmployees = new ArrayList<>(List.of(employeeTest1, employeeTest2, employeeTest3));
         Mockito.when(employeeServiceOut.getAllEmployees()).thenReturn(actualEmployees);
     }
-
     @Test
         // getEmployeesMapByDepartment
     public void shouldReturnEmployeesMapByDepartment() {
@@ -52,7 +51,6 @@ class DepartmentServiceTest {
         final Map<Integer, List<Employee>> expected = departmentOut.getEmployeesMapByDepartment();
         assertEquals(expected, actual);
     }
-
     @Test
         // getEmployeesInDepartment
     public void shouldReturnEmployeesInDepartment() {
@@ -64,7 +62,6 @@ class DepartmentServiceTest {
         final Collection<Employee> expected = departmentOut.getEmployeesInDepartment(department);
         assertEquals(expected, actual);
     }
-
     @Test
         // getSalarySumByDepartment
     public void shouldReturnSalarySumByDepartment() {
@@ -77,7 +74,6 @@ class DepartmentServiceTest {
         final int expected = departmentOut.getSalarySumByDepartment(department);
         assertEquals(expected, actual);
     }
-
     @Test
         // getSalaryMinByDepartment
     public void shouldReturnSalaryMinByDepartment() throws EmployeeNotFoundedException {
@@ -90,7 +86,6 @@ class DepartmentServiceTest {
         final int expected = departmentOut.getSalaryMinByDepartment(department);
         assertEquals(expected, actual);
     }
-
     @Test
         // getSalaryMaxByDepartment
     public void shouldReturnSalaryMaxByDepartment() throws EmployeeNotFoundedException{

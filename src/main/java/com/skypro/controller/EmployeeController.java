@@ -29,12 +29,8 @@ import java.util.OptionalDouble;
 @RestController // Эта аннотация реализует принцип Рест. Можно использовать несколько клиентов
 public class EmployeeController {
     private final EmployeeService employeeService;
-    private final EmployeeRequest employeeRequest;
-
-    public EmployeeController(EmployeeService employeeService, EmployeeRequest employeeRequest) {
-
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.employeeRequest = employeeRequest;
     }
     // Принцип инъекции зависимости. Мы не создаём цепочку зависимости, а просим спринг добавить EmployeeService в качестве зависимости
     // Объявим конструктор для нашего контроллера, и в нём в качестве аргумента EmployeeService employeeService,
@@ -42,7 +38,7 @@ public class EmployeeController {
 
     @PostMapping("/employees")
     public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeRequest employeeRequest) throws EmployeeException {
-        this.employeeRequest.addEmployee(employeeRequest);
+        this.employeeService.addEmployee(employeeRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 //    @PostMapping("/employees")

@@ -11,44 +11,40 @@ import java.util.*;
 @Service  // Аннотация Сервис говорит спрингу что этот компонент должен быть создан в единственном экземпляре
 public class EmployeeService {
 
-    private final EmployeeRequest employeeRequest;
+    final Map<Integer, Employee> employees = new HashMap<>();
+    private final List<Employee> listEmployees = new ArrayList<>(employees.values());
 
-    public EmployeeService(EmployeeRequest employeeRequest) {
-        this.employeeRequest = employeeRequest;
+    public Employee addEmployee(EmployeeRequest employeeRequest) throws EmployeeException {
+        if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
+            throw new EmployeeException("The name must contain only letters");
+        }
+
+        Employee employee = new Employee(employeeRequest.getFirstName(),
+                employeeRequest.getLastName(),
+                employeeRequest.getDepartment(),
+                employeeRequest.getSalary());
+        this.employees.put(employee.getId(), employee);
+        return employee;
     }
-
-//    final Map<Integer, Employee> employees = new HashMap<>();
-//    private final List<Employee> listEmployees = new ArrayList<>(employees.values());
-//
-//    public Employee addEmployee(EmployeeRequest employeeRequest) throws EmployeeException {
-//        if (employeeRequest.getFirstName() == null || employeeRequest.getLastName() == null) {
-//            throw new EmployeeException("The name must contain only letters");
-//        }
-//
-//        Employee employee = new Employee(employeeRequest.getFirstName(),
-//                employeeRequest.getLastName(),
-//                employeeRequest.getDepartment(),
-//                employeeRequest.getSalary());
-//        this.employees.put(employee.getId(), employee);
-//        return employee;
-//    }
-//    private void checkEmployee (EmployeeRequest employeeRequest) throws Exception {
-//        if (
-//                StringUtils.isBlank(employeeRequest.getFirstName())
-//                        || StringUtils.isBlank(employeeRequest.getLastName())
-//                        || StringUtils.isAlpha(employeeRequest.getFirstName())
-//                        || StringUtils.isAlpha(employeeRequest.getLastName())) {
-//            throw new IllegalArgumentException("Допустимы только буквы.");
-//        }
-//    }
+    private void checkEmployee (EmployeeRequest employeeRequest) throws Exception {
+        if (
+                StringUtils.isBlank(employeeRequest.getFirstName())
+                        || StringUtils.isBlank(employeeRequest.getLastName())
+                        || StringUtils.isAlpha(employeeRequest.getFirstName())
+                        || StringUtils.isAlpha(employeeRequest.getLastName())) {
+            throw new IllegalArgumentException("Допустимы только буквы.");
+        }
+    }
     public Collection<Employee> getAllEmployees() {
-        return employeeRequest.getListEmployees();
+        return this.employees
+                .values();
     }
 //    public List<Employee> getAllEmployees() {
 //        return employees.values().stream().toList();
 //    }
     public int getSalarySum() {
-        return employeeRequest.getListEmployees().stream()
+        return employees.values()
+                .stream()
                 .mapToInt(Employee::getSalary)
                 .sum();
     }
@@ -61,12 +57,14 @@ public class EmployeeService {
 //        return sum;
 //    }
     public OptionalDouble getSalaryAverage()    {
-        return employeeRequest.getListEmployees().stream()
+        return employees.values()
+                .stream()
                 .mapToDouble(Employee::getSalary)
                 .average();
     }
     public Employee getSalaryMin() throws EmployeeException {
-        return employeeRequest.getListEmployees().stream()
+        return employees.values()
+                .stream()
                 .min(Comparator.comparingInt(Employee::getSalary))
                 .orElseThrow(()->new EmployeeException("The must be at list one date"));
         //return employees.values().stream().min(Comparator.comparingInt(Employee::getSalary)).orElse(null);
@@ -97,7 +95,7 @@ public class EmployeeService {
 //        return staffWithMin;
 //    }
     public Employee getSalaryMax() throws EmployeeException {
-        return employeeRequest.getListEmployees()
+        return employees.values()
                 .stream()
                 .max(Comparator.comparingInt(Employee::getSalary))
                 .orElseThrow(()->new EmployeeException("The must be at list one date"));
@@ -121,13 +119,15 @@ public class EmployeeService {
 //        }
 //        return staffWithMax;
     public List<Employee> getSalaryHigh() {
-    double averageSalary = employeeRequest.getListEmployees().stream()
-            .mapToInt(Employee::getSalary)
-            .average()
-            .getAsDouble();
-    return employeeRequest.getListEmployees().stream()
-            .filter(e -> e.getSalary()>averageSalary)
-            .toList();
+        double averageSalary = employees.values()
+                .stream()
+                .mapToInt(Employee::getSalary)
+                .average()
+                .getAsDouble();
+        return employees.values()
+                .stream()
+                .filter(e -> e.getSalary()>averageSalary)
+                .toList();
     }
 //    public List<Employee> getSalaryHigh() {
 //        List<Employee> listEmployees = new ArrayList<>(employees.values());
@@ -152,6 +152,6 @@ public class EmployeeService {
 //        return employeesWithSalaryMoreAverage;
 //    }
     public Employee removeEmployee(int id) {
-        return employeeRequest.employees.remove(id);
+        return employees.remove(id);
     }
 }
