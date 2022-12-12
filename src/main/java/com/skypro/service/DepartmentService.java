@@ -4,7 +4,9 @@ import com.skypro.exception.EmployeeNotFoundedException;
 import com.skypro.model.Employee;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,12 +22,12 @@ public class DepartmentService {
         return employeeService.getAllEmployees().stream().filter(e -> e.getDepartment() == department);
     }
 
-        public Map<Integer, List<Employee>> getEmployeesMapByDepartment() {
+    public Map<Integer, List<Employee>> getEmployeesMapByDepartment() {
         return employeeService.getAllEmployees().stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment));
     }
 
-    public Collection<Employee> getEmployeesInDepartment(int department){
+    public Collection<Employee> getEmployeesInDepartment(int department) {
         // return getEmployeesByDepartmentStream(department).collect(Collectors.toList());
         return employeeService.getAllEmployees()
                 .stream()
@@ -39,15 +41,15 @@ public class DepartmentService {
                 .sum();
     }
 
-    public int getSalaryMinByDepartment(int department) throws EmployeeNotFoundedException  {
+    public int getSalaryMinByDepartment(int department) throws EmployeeNotFoundedException {
         return getEmployeesByDepartmentStream(department)
                 .mapToInt(Employee::getSalary).min()
-                .orElseThrow(()->new EmployeeNotFoundedException("Employee is not founded"));
+                .orElseThrow(() -> new EmployeeNotFoundedException("Employee is not founded"));
     }
 
-    public int getSalaryMaxByDepartment(int department) throws EmployeeNotFoundedException  {
+    public int getSalaryMaxByDepartment(int department) throws EmployeeNotFoundedException {
         return getEmployeesByDepartmentStream(department)
                 .mapToInt(Employee::getSalary).max()
-                .orElseThrow(()->new EmployeeNotFoundedException("Employee is not founded"));
+                .orElseThrow(() -> new EmployeeNotFoundedException("Employee is not founded"));
     }
 }

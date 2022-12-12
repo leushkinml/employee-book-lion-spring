@@ -1,27 +1,24 @@
 package com.skypro.controller;
 
-import com.skypro.exception.EmployeeException;
 import com.skypro.exception.EmployeeNotFoundedException;
 import com.skypro.model.Employee;
-import com.skypro.record.EmployeeRequest;
 import com.skypro.service.DepartmentService;
-import com.skypro.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalDouble;
 
 @RestController
 public class DepartmentController {
     private final DepartmentService departmentService;
 
-@Autowired
+    @Autowired
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
     }

@@ -1,17 +1,6 @@
 package com.skypro.record;
 
-import com.skypro.exception.EmployeeException;
-import com.skypro.model.Employee;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class EmployeeRequest {
     private String firstName;

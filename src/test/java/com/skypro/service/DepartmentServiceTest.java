@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -37,8 +37,9 @@ class DepartmentServiceTest {
         actualEmployees = new ArrayList<>(List.of(employeeTest1, employeeTest2, employeeTest3));
         Mockito.when(employeeServiceOut.getAllEmployees()).thenReturn(actualEmployees);
     }
+
     @Test
-        // getEmployeesMapByDepartment
+    // getEmployeesMapByDepartment
     public void shouldReturnEmployeesMapByDepartment() {
         final Map<Integer, List<Employee>> actual =
                 actualEmployees.stream()
@@ -51,8 +52,9 @@ class DepartmentServiceTest {
         final Map<Integer, List<Employee>> expected = departmentOut.getEmployeesMapByDepartment();
         assertEquals(expected, actual);
     }
+
     @Test
-        // getEmployeesInDepartment
+    // getEmployeesInDepartment
     public void shouldReturnEmployeesInDepartment() {
         final int department = 1;
         final List<Employee> actual = actualEmployees
@@ -62,8 +64,9 @@ class DepartmentServiceTest {
         final Collection<Employee> expected = departmentOut.getEmployeesInDepartment(department);
         assertEquals(expected, actual);
     }
+
     @Test
-        // getSalarySumByDepartment
+    // getSalarySumByDepartment
     public void shouldReturnSalarySumByDepartment() {
         final int department = 1;
         final int actual = actualEmployees
@@ -74,8 +77,9 @@ class DepartmentServiceTest {
         final int expected = departmentOut.getSalarySumByDepartment(department);
         assertEquals(expected, actual);
     }
+
     @Test
-        // getSalaryMinByDepartment
+    // getSalaryMinByDepartment
     public void shouldReturnSalaryMinByDepartment() throws EmployeeNotFoundedException {
         final int department = 1;
         final int actual = actualEmployees
@@ -86,9 +90,10 @@ class DepartmentServiceTest {
         final int expected = departmentOut.getSalaryMinByDepartment(department);
         assertEquals(expected, actual);
     }
+
     @Test
-        // getSalaryMaxByDepartment
-    public void shouldReturnSalaryMaxByDepartment() throws EmployeeNotFoundedException{
+    // getSalaryMaxByDepartment
+    public void shouldReturnSalaryMaxByDepartment() throws EmployeeNotFoundedException {
         final int department = 1;
         final int actual = actualEmployees
                 .stream()

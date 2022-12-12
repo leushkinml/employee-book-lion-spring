@@ -8,6 +8,7 @@ Content-Type: application/json
   "department": 1,
   "salary": 1000
 }
+
 ### Создать сотрудника 2
 POST http://localhost:8080/employees
 Content-Type: application/json
@@ -18,6 +19,7 @@ Content-Type: application/json
   "department": 2,
   "salary": 2000
 }
+
 ### Создать сотрудника 3
 POST http://localhost:8080/employees
 Content-Type: application/json
@@ -28,6 +30,7 @@ Content-Type: application/json
   "department": 3,
   "salary": 3000
 }
+
 ### Создать сотрудника 4
 POST http://localhost:8080/employees
 Content-Type: application/json
